@@ -28,7 +28,7 @@ Your phpunit.xml file should have an API key.
 
 
 ## What is missed?
-1. Some unit tests
+1. More unit tests
    1. **What I would like to improve**: more functions need to be unit tested
       1. **How I would like to improve and why**: I need to focus on TDD more.
 2. The application cannot handle provider errors well.
