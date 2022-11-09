@@ -1,18 +1,18 @@
-# Exc App
+## Exc App
 This application is a currency exchange application. It was built in a way
 that imagining it would be used by a exchange office cashier.
 
-##Status
+## Status
 Under early development. This was done for an interview, I will still keep
 developing it as my Public Github is pretty much empty & I want to have a nice
 public project.
 
-##Installation Guide
-###Requirements:
+## Installation Guide
+### Requirements:
 1. Docker (with WSL2.0 Opt on Windows)
 2. Composer (Run composer from local machine, and Laravel commands from container)
 
-###Steps to Run
+### Steps to Run
 1. Pull the project.
 2. Run composer install
 3. Run ./vendor/bin/sail up to get Docker Container running
@@ -23,12 +23,12 @@ public project.
 8. Click **"REGISTER"** on top right side, register & login to your account.
 9. Viola! You are on the dashboard!
 
-###Test Requirements
+### Test Requirements
 Your phpunit.xml file should have an API key.
 
 
-##What is missed?
-1. Some unit tests
+## What is missed?
+1. More unit tests
    1. **What I would like to improve**: more functions need to be unit tested
       1. **How I would like to improve and why**: I need to focus on TDD more.
 2. The application cannot handle provider errors well.
