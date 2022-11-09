@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(
             abstract: ExchangeRatesIOService::class,
-            concrete: fn () => new ExchangeRatesIOService(
+            concrete: fn() => new ExchangeRatesIOService(
                 baseUrl: strval(config('services.exchange-rates-io.url')),
                 apiKey: strval(config('services.exchange-rates-io.key')),
             ),

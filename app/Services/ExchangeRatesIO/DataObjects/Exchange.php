@@ -13,17 +13,17 @@ class Exchange
         $this->responseAsObject = json_decode($this->responseBody);
     }
 
-    public function status()
-    {
-        return $this->responseAsObject->success;
-    }
-
     public function rate(): ?float
     {
         if ($this->status()) {
             return (float)$this->responseAsObject->info->rate;
         }
         return null;
+    }
+
+    public function status()
+    {
+        return $this->responseAsObject->success;
     }
 
     public function result(): ?float
@@ -37,7 +37,7 @@ class Exchange
     public function toArray(): array
     {
         if ($this->status()) {
-            return (array) $this->responseAsObject;
+            return (array)$this->responseAsObject;
         }
         return [];
     }

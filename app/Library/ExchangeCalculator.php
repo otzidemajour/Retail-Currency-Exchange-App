@@ -10,25 +10,15 @@ use Illuminate\Support\Facades\Cache;
 class ExchangeCalculator
 {
 
+    public float $rate;
     private Currency $from;
     private Currency $to;
     private float $amount;
 
-    public float $rate;
-
     public function __construct(
         private readonly ExchangeRatesIOService $api
     )
-    {}
-
-    /**
-     * @param float $baseAmount
-     * @param float $rate
-     * @return float
-     */
-    private function calculateResultWithRate(float $baseAmount, float $rate): float
     {
-        return $baseAmount * $rate;
     }
 
     /**
@@ -77,9 +67,19 @@ class ExchangeCalculator
         $exchange = new Exchange($this->api->exchange()->get($this->from, $this->to, $this->amount)->body());
         $freshRate = $exchange->rate();
         $this->rate = $freshRate;
-        Cache::put($cacheKey, $this->rate,300);
+        Cache::put($cacheKey, $this->rate, 300);
 
         return $this->calculateResultWithRate($this->amount, $freshRate);
+    }
+
+    /**
+     * @param float $baseAmount
+     * @param float $rate
+     * @return float
+     */
+    private function calculateResultWithRate(float $baseAmount, float $rate): float
+    {
+        return $baseAmount * $rate;
     }
 
     /**

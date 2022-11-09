@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Library\ExchangeCalculator;
 use App\Models\PaymentMethod;
 use App\Services\ExchangeRatesIO\ExchangeRatesIOService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +16,8 @@ class ExchangeRateController extends Controller
     public function __construct(
         private readonly ExchangeRatesIOService $api
     )
-    {}
+    {
+    }
 
     public function index()
     {
@@ -55,12 +57,12 @@ class ExchangeRateController extends Controller
                     'result' => $calculatedResult
                 ]
             ]);
-        } catch (\Exception $e) {
-            Log::error('EXCHANGE_ERROR: '. $e->getMessage() . ' on line: ' . $e->getLine() . ' on ' . $e->getFile());
+        } catch (Exception $e) {
+            Log::error('EXCHANGE_ERROR: ' . $e->getMessage() . ' on line: ' . $e->getLine() . ' on ' . $e->getFile());
             return response()->json([
                 'success' => false,
                 'messages' => 'internal error'
-            ],500);
+            ], 500);
         }
     }
 }

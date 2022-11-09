@@ -25,28 +25,28 @@ class Transaction extends Model
     public const TYPE_DEPOSIT = 1;
     public const TYPE_WITHDRAW = 2;
 
+    public static function getAllOfTheUser(int $userId): Collection
+    {
+        return self::where('user_id', $userId)->get();
+    }
+
     public function user()
     {
-        return $this->hasOne(User::class,'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function paymentMethod()
     {
-        return $this->hasOne(PaymentMethod::class,'id', 'payment_method_id');
+        return $this->hasOne(PaymentMethod::class, 'id', 'payment_method_id');
     }
 
     public function baseCurrency()
     {
-        return $this->hasOne(Currency::class,'id', 'base_currency_id');
+        return $this->hasOne(Currency::class, 'id', 'base_currency_id');
     }
 
     public function targetCurrency()
     {
-        return $this->hasOne(Currency::class,'id', 'target_currency_id');
-    }
-
-    public static function getAllOfTheUser(int $userId): Collection
-    {
-        return self::where('user_id', $userId)->get();
+        return $this->hasOne(Currency::class, 'id', 'target_currency_id');
     }
 }

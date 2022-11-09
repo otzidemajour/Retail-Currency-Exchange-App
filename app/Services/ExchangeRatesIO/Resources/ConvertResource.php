@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\ExchangeRatesIO\Resources;
 
 use App\Models\Currency;
@@ -10,7 +11,8 @@ class ConvertResource
     public function __construct(
         private readonly ExchangeRatesIOService $service
     )
-    {}
+    {
+    }
 
     public function get(Currency $baseCurrency, Currency $targetCurrency, float $amount): Response
     {

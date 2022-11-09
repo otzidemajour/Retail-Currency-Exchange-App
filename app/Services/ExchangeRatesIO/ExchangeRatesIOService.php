@@ -16,7 +16,8 @@ class ExchangeRatesIOService
         private readonly string $baseUrl,
         private readonly string $apiKey,
     )
-    {}
+    {
+    }
 
     public function currencies(): CurrencyResource
     {

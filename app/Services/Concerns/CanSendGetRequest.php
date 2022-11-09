@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Concerns;
 
 use Illuminate\Http\Client\PendingRequest;

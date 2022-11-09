@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Concerns;
 
 use Illuminate\Http\Client\PendingRequest;
@@ -9,7 +10,7 @@ trait BuildBaseRequest
     public function buildRequestWithApiKey(): PendingRequest
     {
         return $this->withBaseUrl()->timeout(
-            seconds:15
+            seconds: 15
         )->withHeaders(
             headers: ["apiKey" => $this->apiKey],
         );

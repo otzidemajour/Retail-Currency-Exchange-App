@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\ExchangeRatesIO\Resources;
 
 use App\Services\ExchangeRatesIO\ExchangeRatesIOService;
@@ -9,7 +10,8 @@ class CurrencyResource
     public function __construct(
         private readonly ExchangeRatesIOService $service
     )
-    {}
+    {
+    }
 
     public function all(): Response
     {

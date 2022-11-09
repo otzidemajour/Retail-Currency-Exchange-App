@@ -5,33 +5,32 @@ namespace App\Console\Commands;
 use App\Models\Currency;
 use App\Services\ExchangeRatesIO\DataObjects\Symbols;
 use App\Services\ExchangeRatesIO\ExchangeRatesIOService;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Command\Command as CommandAlias;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class SyncCurrencies extends Command
 {
-    public function __construct(
-        private readonly ExchangeRatesIOService $api
-    )
-    {
-        parent::__construct();
-    }
-
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'currency:sync';
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Synchronizes Currencies';
+
+    public function __construct(
+        private readonly ExchangeRatesIOService $api
+    )
+    {
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.
@@ -43,7 +42,7 @@ class SyncCurrencies extends Command
         try {
             $newSymbols = (new Symbols($this->api->currencies()->all()->body()))->toArray();
             $existingSymbols = Currency::all()->pluck('code')->toArray();
-            $notSyncedCurrencies = array_diff_key($newSymbols,array_flip($existingSymbols));
+            $notSyncedCurrencies = array_diff_key($newSymbols, array_flip($existingSymbols));
 
             if (count($notSyncedCurrencies) == 0) {
                 $this->info('Nothing to sync.');
@@ -53,8 +52,7 @@ class SyncCurrencies extends Command
             $bar = $this->output->createProgressBar(count($notSyncedCurrencies));
 
             $bar->start();
-            foreach ($notSyncedCurrencies as $notSyncedCurrencySymbol => $notSyncedCurrencyName)
-            {
+            foreach ($notSyncedCurrencies as $notSyncedCurrencySymbol => $notSyncedCurrencyName) {
                 $currency = new Currency();
                 $currency->code = $notSyncedCurrencySymbol;
                 $currency->name = $notSyncedCurrencyName;
@@ -63,8 +61,8 @@ class SyncCurrencies extends Command
             }
             $bar->finish();
 
-        } catch (\Exception $e) {
-            Log::error('SYNC_CURRENCY_ERROR: '. $e->getMessage() . ' on line: ' . $e->getLine() . ' on ' . $e->getFile());
+        } catch (Exception $e) {
+            Log::error('SYNC_CURRENCY_ERROR: ' . $e->getMessage() . ' on line: ' . $e->getLine() . ' on ' . $e->getFile());
             $this->error('A fatal error occurred & it is logged.');
             return CommandAlias::FAILURE;
         }
